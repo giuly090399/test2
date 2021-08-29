@@ -29,10 +29,7 @@ class Group(BaseGroup):
         max=Constants.endowment,
         label="I will keep",
     )
-    dado = models.StringField(
-        choices=[['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5'], ['6', '6']]
-    )
-
+    +
 
 class Player(BasePlayer):
     pass
@@ -56,13 +53,4 @@ class Offer(Page):
     form_fields = ['kept']
 
 
-class Introduction2(Page):
-    pass
-
-
-class Dado(Page):
-    form_model = 'group'
-    form_fields = ['dado']
-
-
-page_sequence = [Introduction, Offer, Introduction2, Dado]
+page_sequence = [Introduction, Offer]
