@@ -129,7 +129,8 @@ class Player(BasePlayer):
     FK2 = models.StringField(
         label='Supongamos que deposita 100 pesos en una cuenta de ahorro que le da una ganancia de 2% al año. Si no realiza depósitos ni retiros,'
               '¿incluyendo los intereses, usted tendría al final de año...',
-        choices=[['1', 'más de 102 pesos?'], ['2', 'exactamente 102 pesos?'], ['3', 'menos de 102 pesos?'], ['4', 'No sé']]
+        choices=[['1', 'más de 102 pesos?'], ['2', 'exactamente 102 pesos?'], ['3', 'menos de 102 pesos?'],
+                 ['4', 'No sé']]
     )
     FK3 = models.StringField(
         label='Supongamos que deposita 100 pesos en una cuenta de ahorro que le da una ganancia de 2% al año. Si no realiza depósitos ni retiros,'
@@ -138,35 +139,70 @@ class Player(BasePlayer):
     )
     FK4 = models.StringField(
         label='Si le regalan 1,000 pesos, pero tiene que esperar un año para gastarlos y ese año la inflación es del 5%, ¿usted podría comprar...?',
-        choices=[['1', 'más de lo que puede comprar hoy'], ['2', 'los mismo'], ['3', 'menos de lo que puede comprar hoy'], ['4', 'No sabe']]
+        choices=[['1', 'más de lo que puede comprar hoy'], ['2', 'los mismo'],
+                 ['3', 'menos de lo que puede comprar hoy'], ['4', 'No sabe']]
     )
 
 
-class TaskA(Page):
+class TaskA1(Page):
     form_model = Player
     form_fields = ['RP1', 'RP2', 'RP3', 'RP4']
+    timeout_seconds = 120
 
     # @staticmethod
     # def is_displayed(player: Player):
     #     participant = player.participant
     #
     #     return player.round_number == participant.task_rounds
+
+
+class TaskA2(Page):
+    form_model = Player
+    form_fields = ['RP2']
+    timeout_seconds = 120
+
+
+class TaskA3(Page):
+    form_model = Player
+    form_fields = ['RP3']
+    timeout_seconds = 120
+
+
+class TaskA4(Page):
+    form_model = Player
+    form_fields = ['RP4']
+    timeout_seconds = 120
+
+
+class Wait(WaitPage):
+    wait_for_all_groups = True
+    title_text = 'Página de espera'
+    body_text = 'Por favor no salgas del experimento, la página continuará automáticamente una vez que los otros participantes hayan subido su respuesta.'
 
 
 class TaskB(Page):
     form_model = Player
-    form_fields = ['PT1', 'PT2', 'PT3', 'PT4', 'PT5', 'PT6', 'PT7', 'PT8', 'PT9', 'PT10', 'PT11', 'PT12', 'PT13', 'PT14', 'PT15']
+    form_fields = ['PT1', 'PT2', 'PT3', 'PT4', 'PT5', 'PT6', 'PT7', 'PT8', 'PT9', 'PT10', 'PT11', 'PT12', 'PT13',
+                   'PT14', 'PT15']
+    timeout_seconds = 120
 
     # @staticmethod
     # def is_displayed(player: Player):
     #     participant = player.participant
     #
     #     return player.round_number == participant.task_rounds
+
+
+class Wait2(WaitPage):
+    wait_for_all_groups = True
+    title_text = 'Página de espera'
+    body_text = 'Por favor no salgas del experimento, la página continuará automáticamente una vez que los otros participantes hayan subido su respuesta.'
 
 
 class TaskC(Page):
     form_model = Player
     form_fields = ['FK1', 'FK2', 'FK3', 'FK4']
+    timeout_seconds = 120
 
     # @staticmethod
     # def is_displayed(player: Player):
@@ -175,4 +211,10 @@ class TaskC(Page):
     #     return player.round_number == participant.task_rounds
 
 
-page_sequence = [TaskA, TaskB, TaskC]
+class Wait3(WaitPage):
+    wait_for_all_groups = True
+    title_text = 'Página de espera'
+    body_text = 'Por favor no salgas del experimento, la página continuará automáticamente una vez que los otros participantes hayan subido su respuesta.'
+
+
+page_sequence = [TaskA1, TaskA2, TaskA3, TaskA4, Wait, TaskB, Wait2, TaskC, Wait3]

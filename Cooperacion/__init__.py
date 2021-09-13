@@ -1,3 +1,5 @@
+import random
+
 from otree.api import *
 
 doc = """
@@ -12,17 +14,18 @@ S285-S300.
 class Constants(BaseConstants):
     name_in_url = 'cooperation'
     players_per_group = 2
-    num_rounds = 1
+    num_rounds = 4
     endowment = cu(100)
 
 
 class Subsession(BaseSubsession):
-    pass
+    def creating_session(self):
+        self.group_randomly(fixed_id_in_group=True)
 
 
 class Group(BaseGroup):
     coop = models.CurrencyField(
-        doc="""Amount dictator decided to keep for himself""",
+        doc="""Monto que decide contribuir""",
         min=0,
         max=Constants.endowment,
         label="Contribuyo con",
@@ -33,14 +36,6 @@ class Player(BasePlayer):
     pass
 
 
-# FUNCTIONS
-def set_payoffs(group: Group):
-    p1 = group.get_player_by_id(1)
-    p2 = group.get_player_by_id(2)
-    p1.payoff = group.kept
-    p2.payoff = Constants.endowment - group.kept
-
-
 # PAGES
 class Introduction(Page):
     pass
@@ -49,6 +44,19 @@ class Introduction(Page):
 class Cooperacion(Page):
     form_model = 'group'
     form_fields = ['coop']
+    timeout_seconds = 120
+
+    def vars_for_template(self):
+        if self.id_in_subsession % 2 == 0:
+            info = 'si'
+            return dict(
+                info=info
+            )
+        else:
+            info = 'no'
+            return dict(
+                info=info
+            )
 
 
 page_sequence = [Introduction, Cooperacion]

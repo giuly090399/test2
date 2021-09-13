@@ -32,6 +32,7 @@ class Instructions(Page):
 class Contribute(Page):
     form_model = 'player'
     form_fields = ['contribution']
+    timeout_seconds = 120
 
 
 page_sequence = [Instructions, Contribute]

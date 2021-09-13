@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{{ block title }}Aversión al riesgo, a la pérdida y a la ambigüedad{{ endblock }}
+{{ block content }}
+
+    <p>
+        <img src="{% static "testproject/AmbiguityAversion.jpg" %}"/>
+        {{ formfield 'RP3' }}
+    </p>
+
+
+    {{ next_button }}
+
+{{ endblock }}

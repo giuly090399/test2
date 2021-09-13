@@ -13,8 +13,6 @@ class Constants(BaseConstants):
     name_in_url = 'dictator'
     players_per_group = 2
     num_rounds = 1
-    instructions_template = 'dictator/instructions.html'
-    # Initial amount allocated to the dictator
     endowment = cu(100)
 
 
@@ -29,7 +27,7 @@ class Group(BaseGroup):
         max=Constants.endowment,
         label="I will keep",
     )
-    +
+
 
 class Player(BasePlayer):
     pass
@@ -51,6 +49,13 @@ class Introduction(Page):
 class Offer(Page):
     form_model = 'group'
     form_fields = ['kept']
+    timeout_seconds = 120
 
 
-page_sequence = [Introduction, Offer]
+class Wait(WaitPage):
+    wait_for_all_groups = True
+    title_text = 'Página de espera'
+    body_text = 'Por favor no salgas del experimento, la página continuará automáticamente una vez que los otros participantes hayan subido su respuesta.'
+
+
+page_sequence = [Introduction, Offer, Wait]

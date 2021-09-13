@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{{ block title }}Pago{{ endblock }}
+{{ block content }}
+
+    <p>
+        Por tu participación, el pago base es de _. Adicionalmente en la sesión te dirán cuál es la ronda que se tomará en cuenta. Por favor, anota a continuación tu correo para hacerte llegar el pago.
+    </p>
+
+    {{ formfields }}
+
+    {{ next_button }}
+
+{{ endblock }}
